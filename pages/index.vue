@@ -1,7 +1,7 @@
 <template>
   <div>
     <Logo />
-    <Login />
+    <Login @login-click="login($event)" />
   </div>
 </template>
 
@@ -12,6 +12,15 @@ export default {
   components: {
     Login,
     Logo
+  },
+  methods: {
+    login(event) {
+      const request = new Request('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(event)
+      });
+      fetch(request).then(x => console.log(x));
+    }
   }
 };
 </script>

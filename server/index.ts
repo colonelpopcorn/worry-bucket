@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import consola from 'consola';
 import config from '../nuxt.config';
+import { AppRouter } from './routes';
 
 const app = new Koa();
 
@@ -25,6 +26,8 @@ async function start() {
     await builder.build();
   }
 
+  app.use(AppRouter.routes());
+  app.use(AppRouter.allowedMethods());
   app.use(ctx => {
     ctx.status = 200;
     ctx.respond = false; // Bypass Koa's built-in response handling

@@ -1,6 +1,9 @@
 <template>
-  <div id="app" class="container bg-green-300">
-    <RouterView />
+  <div id="app">
+    <NavHeader />
+    <div class="container bg-green-300">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,6 @@ export default class App extends Vue {}
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 #nav {

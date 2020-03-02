@@ -1,12 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div id="app" class="container bg-green-300">
+    <RouterView />
   </div>
 </template>
+
+<script>
+import { Component, Prop, Vue } from "vue-property-decorator";
+import RouterView from "@/views/RouterView";
+import NavHeader from "@/components/NavHeader";
+
+@Component({
+  components: {
+    NavHeader
+  }
+})
+export default class App extends Vue {}
+</script>
 
 <style>
 #app {

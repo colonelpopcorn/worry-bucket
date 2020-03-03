@@ -16,7 +16,29 @@ import { Component, Prop, Vue } from "vue-property-decorator";
     Logo
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  login(eventBody) {
+    fetch("http://localhost:5850/auth/login", {
+      method: "POST",
+      body: JSON.stringify(eventBody),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          res.json().then(resJson => {
+            // eslint-disable-next-line
+            console.log(resJson);
+          });
+        }
+      })
+      .catch(err => {
+        // eslint-disable-next-line
+        console.error(err);
+      });
+  }
+}
 </script>
 
 <style>

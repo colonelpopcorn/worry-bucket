@@ -9,7 +9,7 @@
 
 <script>
 import { Component, Prop, Vue } from "vue-property-decorator";
-import RouterView from "@/views/RouterView";
+import Logo from "@/components/Logo";
 import NavHeader from "@/components/NavHeader";
 
 @Component({

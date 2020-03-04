@@ -42,16 +42,12 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 
 @Component({})
 export default class NavHeader extends Vue {
-  data() {
-    return {
-      isExpanded: false
-    };
-  }
+  isExpanded = false;
   toggleNav() {
     // eslint-disable-next-line
     this.isExpanded = !this.isExpanded;

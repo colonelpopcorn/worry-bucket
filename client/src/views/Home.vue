@@ -5,9 +5,9 @@
   </div>
 </template>
 
-<script>
-import Login from "@/components/Login";
-import Logo from "@/components/Logo";
+<script lang="ts">
+import Login from "@/components/Login.vue";
+import Logo from "../components/Logo.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
@@ -17,7 +17,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
   }
 })
 export default class Home extends Vue {
-  login(eventBody) {
+  login(eventBody: { username: string; password: string }) {
     fetch("http://localhost:5850/auth/login", {
       method: "POST",
       body: JSON.stringify(eventBody),

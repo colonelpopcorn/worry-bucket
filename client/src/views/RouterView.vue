@@ -4,9 +4,9 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import NavHeader from "@/components/NavHeader";
+import NavHeader from "@/components/NavHeader.vue";
 
 @Component({
   components: {

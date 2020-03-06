@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts">
-import Login from "@/components/Login.vue";
-import Logo from "../components/Logo.vue";
-import { Component, Prop, Vue } from "vue-property-decorator";
+import Login from '../components/Login.vue';
+import Logo from '../components/Logo.vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
   components: {
@@ -18,20 +18,20 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class Home extends Vue {
   login(eventBody: { username: string; password: string }) {
-    fetch("http://localhost:5850/auth/login", {
-      method: "POST",
-      body: JSON.stringify(eventBody),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => {
-        if (res.ok) {
-          res.json().then(resJson => {
-            // eslint-disable-next-line
-            console.log(resJson);
-          });
+    this.$http
+      .post<{ success: boolean; responseMessage: string }>(
+        'http://localhost:5850/auth/login',
+        {
+          method: 'POST',
+          body: JSON.stringify(eventBody),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
+      )
+      .toPromise()
+      .then(res => {
+        alert(res.responseMessage);
       })
       .catch(err => {
         // eslint-disable-next-line
@@ -58,8 +58,8 @@ export default class Home extends Vue {
 }
 
 .title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

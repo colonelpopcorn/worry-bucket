@@ -6,9 +6,11 @@
 </template>
 
 <script lang="ts">
-import Login from '../components/Login.vue';
-import Logo from '../components/Logo.vue';
+import Login from '@/components/Login.vue';
+import Logo from '@/components/Logo.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { from } from 'rxjs';
+import { LoginResponseDTO } from '../../../shared/models/auth/login-request.dto';
 
 @Component({
   components: {
@@ -18,25 +20,27 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 })
 export default class Home extends Vue {
   login(eventBody: { username: string; password: string }) {
-    this.$http
-      .post<{ success: boolean; responseMessage: string }>(
-        'http://localhost:5850/auth/login',
-        {
-          method: 'POST',
-          body: JSON.stringify(eventBody),
-          headers: {
-            'Content-Type': 'application/json'
-          }
+    const fetchPromise = new Promise((resolve, reject) => {
+      fetch('http://localhost:5850/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(eventBody),
+        headers: {
+          'Content-Type': 'application/json'
         }
-      )
-      .toPromise()
-      .then(res => {
-        alert(res.responseMessage);
       })
-      .catch(err => {
-        // eslint-disable-next-line
-        console.error(err);
-      });
+        .then((res: Response) => {
+          if (res.ok) {
+            res.json().then(json => resolve(json as LoginResponseDTO));
+          }
+        })
+        .catch(err => reject(err));
+    });
+    from(fetchPromise).subscribe(
+      (loginRes: LoginResponseDTO) => {
+        alert(JSON.stringify(loginRes, null, 4));
+      },
+      err => {}
+    );
   }
 }
 </script>

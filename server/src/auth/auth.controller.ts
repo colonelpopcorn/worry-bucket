@@ -1,20 +1,32 @@
 import { Controller, Post, Body, HttpCode, Logger } from '@nestjs/common';
-import { LoginRequestDTO } from '../models/auth/login-request.dto';
+import { LoginRequestDTO, LoginResponseDTO } from '../models/auth/auth.dto';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
   private readonly logger: Logger = new Logger('AuthController');
+  private readonly SUCCESS_REPSONSE = {
+    success: true,
+    responseMessage: 'LOGGED_IN_SUCCESSFULLY',
+    token: '',
+  };
+  private readonly FAILURE_RESPONSE = {
+    success: false,
+    responseMessage: 'LOGIN_UNSUCCESSFUL',
+  };
+
+  constructor(private authService: AuthService) {}
   @Post('login')
-  login(@Body() body: LoginRequestDTO) {
-    this.logger.log(body);
+  async login(@Body() body: LoginRequestDTO): Promise<LoginResponseDTO> {
     const { username, password } = body;
-    if (username === 'jonathan' && password === 'somepass') {
-      this.logger.log('success.');
-      return { success: true, responseMessage: 'LOGGED_IN_SUCCESSFULLY' };
+    if (await this.authService.userIsRegistered(username)) {
+      return (await this.authService.userPasswordIsCorrect(username, password))
+        ? this.SUCCESS_REPSONSE
+        : this.FAILURE_RESPONSE;
     } else {
       this.logger.log('unsuccess.');
-
-      return { success: false, responseMessage: 'LOGIN_UNSUCCESSFUL' };
+      await this.authService.registerUser(username, password);
+      return this.SUCCESS_REPSONSE;
     }
   }
 }

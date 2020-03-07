@@ -35,6 +35,7 @@ export default class Home extends Vue {
       (loginRes: LoginResponseDTO) => {
         alert(JSON.stringify(loginRes, null, 4));
       },
+      // eslint-disable-next-line
       (err: any) => console.error(err)
     );
   }

@@ -10,7 +10,8 @@ import Login from '@/components/Login.vue';
 import Logo from '@/components/Logo.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { from } from 'rxjs';
-import { LoginResponseDTO } from '../../../shared/models/auth/login-request.dto';
+import { LoginResponseDTO } from '@/models/auth/login-request.dto';
+import { fetchPromise } from '../lib/fetchPromiseCtor';
 
 @Component({
   components: {
@@ -20,26 +21,21 @@ import { LoginResponseDTO } from '../../../shared/models/auth/login-request.dto'
 })
 export default class Home extends Vue {
   login(eventBody: { username: string; password: string }) {
-    const fetchPromise = new Promise((resolve, reject) => {
-      fetch('http://localhost:5850/auth/login', {
+    const promise = fetchPromise<LoginResponseDTO>(
+      'http://localhost:5850/auth/login',
+      {
         method: 'POST',
         body: JSON.stringify(eventBody),
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-        .then((res: Response) => {
-          if (res.ok) {
-            res.json().then(json => resolve(json as LoginResponseDTO));
-          }
-        })
-        .catch(err => reject(err));
-    });
+      }
+    );
     from(fetchPromise).subscribe(
       (loginRes: LoginResponseDTO) => {
         alert(JSON.stringify(loginRes, null, 4));
       },
-      err => {}
+      (err: any) => console.error(err)
     );
   }
 }

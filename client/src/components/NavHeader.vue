@@ -1,7 +1,9 @@
 <template>
   <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <span class="font-semibold text-xl tracking-tight">WorryBucket</span>
+      <span class="font-semibold text-xl tracking-tight">
+        <router-link :key="'/'" :to="'/'">WorryBucket</router-link>
+      </span>
     </div>
     <div class="block lg:hidden">
       <button
@@ -19,31 +21,18 @@
       class="w-full block flex-grow lg:flex lg:items-center lg:w-auto"
     >
       <div class="text-sm lg:flex-grow">
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-        >Docs</a>
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-        >Examples</a>
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-        >Blog</a>
-      </div>
-      <div>
-        <a
-          href="#"
-          class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-        >Download</a>
+        <router-link
+          v-for="route in $router.options.routes.filter(x => x.name !== 'Home')"
+          :key="route.path"
+          :to="route.path"
+        >{{ route.name }}</router-link>
       </div>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component({})
 export default class NavHeader extends Vue {

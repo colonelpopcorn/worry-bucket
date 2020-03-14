@@ -8,14 +8,11 @@ export class AuthService {
   async userPasswordIsCorrect(
     username: string,
     password: string,
-  ): Promise<boolean> {
-    return (
-      (await User.query()
-        .select('username')
-        .where('username', username)
-        .where('password', password)
-        .resultSize()) === 1
-    );
+  ): Promise<User[]> {
+    return await User.query()
+      .select('username')
+      .where('username', username)
+      .where('password', password);
   }
 
   async userIsRegistered(username: string): Promise<boolean> {

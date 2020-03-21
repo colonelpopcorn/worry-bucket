@@ -6,6 +6,7 @@ export const config = {
         filename: './dev.sqlite3',
       },
     },
+    secret: 'SOME_SECRET_KEY',
   },
   staging: {
     db: {
@@ -22,6 +23,7 @@ export const config = {
       migrations: {
         tableName: 'knex_migrations',
       },
+      secret: 'SOME_SECRET_KEY',
     },
   },
   production: {
@@ -39,6 +41,7 @@ export const config = {
       migrations: {
         tableName: 'knex_migrations',
       },
+      secret: 'SOME_SECRET_KEY',
     },
   },
 };

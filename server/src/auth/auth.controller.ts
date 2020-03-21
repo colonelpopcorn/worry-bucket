@@ -30,7 +30,7 @@ export class AuthController {
         username,
         pw,
       );
-      return (await this.authService.userPasswordIsCorrect(username, pw))
+      return userRecord.length > 0
         ? this.getSuccessResponse(username, userRecord[0].$id())
         : this.getFailureResponse();
     } else {
@@ -51,7 +51,7 @@ export class AuthController {
     };
     const token = this.jwtService.sign({
       username,
-      expires: this.momentService.add(30, 'days'),
+      userId,
     });
     return { ...SUCCESS_REPSONSE, token };
   }

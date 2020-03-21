@@ -10,7 +10,11 @@
         class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
         @click="toggleNav()"
       >
-        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="fill-current h-3 w-3"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <title>Menu</title>
           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
         </svg>
@@ -25,7 +29,8 @@
           v-for="route in $router.options.routes.filter(x => x.name !== 'Home')"
           :key="route.path"
           :to="route.path"
-        >{{ route.name }}</router-link>
+          >{{ route.name }}</router-link
+        >
       </div>
     </div>
   </nav>
@@ -38,7 +43,6 @@ import { Vue, Component } from 'vue-property-decorator';
 export default class NavHeader extends Vue {
   isExpanded = false;
   toggleNav() {
-    // eslint-disable-next-line
     this.isExpanded = !this.isExpanded;
   }
 }

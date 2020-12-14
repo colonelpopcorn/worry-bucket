@@ -22,5 +22,13 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "worry-bucket": {
+      "tags": []
+    },
+    "worry-bucket-e2e": {
+      "tags": [],
+      "implicitDependencies": ["worry-bucket"]
+    }
+  }
 }
